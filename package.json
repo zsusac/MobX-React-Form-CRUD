@@ -1,14 +1,14 @@
 {
   "name": "mobx-react-form-crud-example",
   "version": "1.0.0",
-  "description": "CRUD example for MobX + React + MobX React Form",
+  "description": "CRUD example for MobX + React + MobX React Form + JSON Server",
   "scripts": {
     "lint": "eslint src",
     "watchdev": "webpack --watch -d --config webpack.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mobxjs/mobx-react-boilerplate.git"
+    "url": "https://github.com/zsusac/MobX-React-Form-CRUD"
   },
   "keywords": [
     "crud",
