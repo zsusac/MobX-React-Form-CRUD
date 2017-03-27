@@ -2,9 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 import { Router, Route, hashHistory } from 'react-router';
-import Task from './components/Task.jsx';
-import TaskEdit from './components/TaskEdit.jsx';
-import TaskNew from './components/TaskNew.jsx';
+import Task from './components/pages/Task.jsx';
+import TaskEdit from './components/pages/TaskEdit.jsx';
+import TaskNew from './components/pages/TaskNew.jsx';
 import TaskFormStore from './stores/TaskFormStore.jsx';
 
 const stores = { TaskFormStore };

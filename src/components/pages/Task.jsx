@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {inject, observer, action} from 'mobx-react';
-import TaskListItem from './TaskListItem.jsx';
-import TaskFormStore from '../stores/TaskFormStore.jsx';
+import TaskListItem from '../TaskListItem.jsx';
+import TaskFormStore from '../../stores/TaskFormStore.jsx';
 import MobxReactFormDevTools from 'mobx-react-form-devtools';
 import {Link} from 'react-router';
 

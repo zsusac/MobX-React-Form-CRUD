@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {inject, observer, action} from 'mobx-react';
-import TaskFormStore from '../stores/TaskFormStore.jsx';
+import {inject, observer} from 'mobx-react';
+import TaskFormStore from '../../stores/TaskFormStore.jsx';
 import {Link} from 'react-router';
-import TaskForm from './forms/TaskForm.jsx';
+import TaskForm from '../forms/TaskForm.jsx';
 
 @inject('TaskFormStore')
 @observer
