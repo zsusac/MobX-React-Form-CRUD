@@ -9,7 +9,8 @@ import {Link} from 'react-router';
 @observer
 class Task extends Component {
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         const {TaskFormStore} = this.props;
         TaskFormStore.fetchAll();
     }

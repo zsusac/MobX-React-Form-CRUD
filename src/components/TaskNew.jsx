@@ -7,8 +7,9 @@ import { Link } from 'react-router';
 @inject('TaskFormStore')
 @observer
 class TaskNew extends Component {
-    
-    componentDidMount() {
+
+    constructor(props) {
+        super(props);
         const {TaskFormStore} = this.props;
         // Reset the Form to default values.	
         TaskFormStore.reset();
