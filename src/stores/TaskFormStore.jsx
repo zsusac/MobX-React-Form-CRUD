@@ -116,7 +116,7 @@ class TaskFormStore extends MobxReactForm {
                     this.tasks = json;
                 });
         }).catch(err => {
-            console.error('Fetch all tasks failed');
+            console.error('Fetch all tasks failed', err);
         });
     }
 
@@ -147,8 +147,7 @@ class TaskFormStore extends MobxReactForm {
      * @memberOf TaskFormStore
      */
     @action fetchPriorities() {
-        // To reduce number of REST api calls,
-        // fetch priorities only when list is empty
+        // To reduce number of REST api calls, fetch priorities only when list is empty
         if (this.priorities.length == 0) {
             fetch('http://localhost:3000/priorities', {method: 'get'}).then(response => {
 
@@ -219,6 +218,14 @@ class TaskFormStore extends MobxReactForm {
         });
     }
 
+    /**
+     * Send DELETE request to server for given task
+     * Redirect to Task page if request was successful
+     * 
+     * @param {any} task 
+     * 
+     * @memberOf TaskFormStore
+     */
     deleteTask(task) {
         fetch('http://localhost:3000/tasks/' + task.id, {method: 'DELETE'}).then(response => {
 
@@ -230,6 +237,29 @@ class TaskFormStore extends MobxReactForm {
         }).catch(err => {
             console.error('Delete failed');
         });
+    }
+
+    /**
+     * Returns priority name for given priority id
+     * 
+     * @param {any} id 
+     * @returns 
+     * 
+     * @memberOf TaskFormStore
+     */
+    getPriorityName(id) {
+        switch (id) {
+            case '1':
+                return 'Urgent';
+            case '2':
+                return 'High';
+            case '3':
+                return 'Medium';
+            case '4':
+                return 'Low';
+            default:
+                return 'Undefined';
+        }
     }
 }
 

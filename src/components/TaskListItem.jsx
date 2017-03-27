@@ -5,11 +5,12 @@ import { Link } from 'react-router';
 @observer
 class TaskListItem extends Component {
     render() {
-        const task = this.props.task;
+        const {task, getPriorityName} = this.props;
         
         return (
             <tr>
                 <td>{task.task}</td>
+                <td>{getPriorityName(task.priority)}</td>
                 <td>{task.completed ? 'Yes' : 'No'}</td>
                 <td><Link to={'/task/' + task.id}>Edit</Link></td>
             </tr>

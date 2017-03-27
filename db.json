@@ -23,12 +23,6 @@
       "task": "Task 4",
       "completed": false,
       "priority": "4"
-    },
-    {
-      "id": 5,
-      "task": "Task 6",
-      "completed": true,
-      "priority": "1"
     }
   ],
   "priorities": [

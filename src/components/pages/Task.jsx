@@ -26,6 +26,7 @@ class Task extends Component {
                         <thead>
                             <tr>
                                 <th>Task</th>
+                                <th>Priority</th>
                                 <th>Completed</th>
                                 <th>Edit</th>
                             </tr>
@@ -34,7 +35,7 @@ class Task extends Component {
                             {TaskFormStore
                                 .tasks
                                 .map(task => {
-                                    return <TaskListItem task={task} key={task.id}/>
+                                    return <TaskListItem task={task} key={task.id} getPriorityName={TaskFormStore.getPriorityName}/>
                                 })}
                         </tbody>
                     </table>
