@@ -6,6 +6,13 @@ import MobxReactFormDevTools from 'mobx-react-form-devtools';
 @inject('TaskFormStore')
 @observer
 class TaskForm extends Component {
+    constructor(props) {
+        super(props);
+        const {TaskFormStore} = this.props;
+        // Fetch priorities to populate dropdown.
+        TaskFormStore.fetchPriorities();
+    }
+
     render() {
         const {TaskFormStore} = this.props;
 
@@ -36,6 +43,30 @@ class TaskForm extends Component {
                     .value}/>
                 <p>{TaskFormStore
                         .$('task')
+                        .error}</p>
+
+                <label
+                    htmlFor={TaskFormStore
+                    .$('priority')
+                    .id}>
+                    {TaskFormStore
+                        .$('priority')
+                        .label}
+                </label>
+                <select
+                    {...TaskFormStore.$('priority').bind()}
+                    checked={TaskFormStore
+                    .$('priority')
+                    .value}>
+                    <option value=''>Select...</option>
+                    {TaskFormStore
+                        .priorities
+                        .map(priority => {
+                            return <option key={priority.id} value={priority.id}>{priority.name}</option>
+                        })}
+                </select>
+                <p>{TaskFormStore
+                        .$('priority')
                         .error}</p>
 
                 <label
