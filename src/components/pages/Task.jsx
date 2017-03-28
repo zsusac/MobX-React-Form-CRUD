@@ -40,6 +40,9 @@ class Task extends Component {
                         </tbody>
                     </table>
                 </div>
+                <div>
+                    Completed tasks {TaskFormStore.completed}/{TaskFormStore.tasks.length}
+                </div>
             </div>
         );
     }

@@ -103,6 +103,19 @@ class TaskFormStore extends MobxReactForm {
     }
 
     /**
+     * Return number of completed tasks
+     * 
+     * @readonly
+     * 
+     * @memberOf TaskFormStore
+     */
+    @computed get completed() {
+        return this.tasks.filter(
+			task => task.completed === true
+		).length;
+    }
+
+    /**
      * Fetch all tasks from server
      *
      *
