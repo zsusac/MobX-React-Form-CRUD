@@ -2,6 +2,7 @@ import MobxReactForm from 'mobx-react-form';
 import validatorjs from 'validatorjs';
 import {observable, computed, action} from 'mobx';
 import {hashHistory} from 'react-router';
+import RestClientService from '../services/RestClientService.jsx';
 
 /**
  * TaskFormStore plugins property
@@ -108,7 +109,7 @@ class TaskFormStore extends MobxReactForm {
      * @memberOf TaskFormStore
      */
     @action fetchAll() {
-        fetch('http://localhost:3000/tasks', {method: 'get'}).then(response => {
+        RestClientService.callGet('/tasks').then(response => {
 
             return response
                 .json()
@@ -128,7 +129,7 @@ class TaskFormStore extends MobxReactForm {
      * @memberOf TaskFormStore
      */
     @action fetchById(id) {
-        fetch('http://localhost:3000/tasks/' + id, {method: 'get'}).then(response => {
+        RestClientService.callGet('/tasks/' + id).then(response => {
 
             return response
                 .json()
@@ -149,7 +150,7 @@ class TaskFormStore extends MobxReactForm {
     @action fetchPriorities() {
         // To reduce number of REST api calls, fetch priorities only when list is empty
         if (this.priorities.length == 0) {
-            fetch('http://localhost:3000/priorities', {method: 'get'}).then(response => {
+            RestClientService.callGet('/priorities').then(response => {
 
                 return response
                     .json()
@@ -171,14 +172,7 @@ class TaskFormStore extends MobxReactForm {
      * @memberOf TaskFormStore
      */
     createTask(task) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-
-        fetch('http://localhost:3000/tasks', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(task)
-        }).then(response => {
+         RestClientService.callPost('/tasks', task).then(response => {
 
             return response
                 .json()
@@ -199,14 +193,7 @@ class TaskFormStore extends MobxReactForm {
      * @memberOf TaskFormStore
      */
     updateTask(task) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-
-        fetch('http://localhost:3000/tasks/' + task.id, {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify(task)
-        }).then(response => {
+        RestClientService.callPut('/tasks/' + task.id, task).then(response => {
 
             return response
                 .json()
@@ -227,7 +214,7 @@ class TaskFormStore extends MobxReactForm {
      * @memberOf TaskFormStore
      */
     deleteTask(task) {
-        fetch('http://localhost:3000/tasks/' + task.id, {method: 'DELETE'}).then(response => {
+        RestClientService.callDelete('/tasks/' + task.id).then(response => {
 
             return response
                 .json()
