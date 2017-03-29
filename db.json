@@ -48,7 +48,7 @@
         "id": 1,
         "name": "Project 1",
         "description": "Project description 1",
-        "phase": "1",
+        "phase": 1,
         "tasks": [
             {
             "id": 1,

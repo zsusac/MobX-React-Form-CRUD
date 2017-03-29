@@ -6,6 +6,7 @@ import MobxReactFormDevTools from 'mobx-react-form-devtools';
 @inject('TaskFormStore')
 @observer
 class TaskForm extends Component {
+    
     constructor(props) {
         super(props);
         const {TaskFormStore} = this.props;

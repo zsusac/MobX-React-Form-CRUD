@@ -12,6 +12,9 @@ import Project from './components/pages/project/Project.jsx';
 import ProjectEdit from './components/pages/project/ProjectEdit.jsx';
 import ProjectFormStore from './stores/ProjectFormStore.jsx';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 const stores = { TaskFormStore, ProjectFormStore };
 
 render((

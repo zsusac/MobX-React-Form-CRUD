@@ -126,6 +126,69 @@ class ProjectFormStore extends MobxReactForm {
     }
 
     /**
+     * Fetch project from server by id and update ProjectFormStore values property
+     *
+     * @param {any} id
+     *
+     * @memberOf ProjectFormStore
+     */
+    @action fetchById(id) {
+        RestClientService.callGet('/projects/' + id).then(response => {
+
+            return response
+                .json()
+                .then(json => {
+                    // update ProjectFormStore values property
+                    this.update(json)
+                });
+        }).catch(err => {
+            console.error('Fetch project by id failed');
+        });
+    }
+
+    /**
+     * Fetch phases from server
+     *
+     * @memberOf ProjectFormStore
+     */
+    @action fetchPhases() {
+        // To reduce number of REST api calls, fetch phases only when list is empty
+        if (this.phases.length == 0) {
+            RestClientService.callGet('/phases').then(response => {
+
+                return response
+                    .json()
+                    .then(json => {
+                        this.phases = json;
+                    });
+            }).catch(err => {
+                console.error('Fetch phases failed');
+            });
+        }
+    }
+
+    /**
+     * Send DELETE request to server for given project
+     * Redirect to Project page if request was successful
+     * 
+     * @param {any} task 
+     * 
+     * @memberOf ProjectFormStore
+     */
+    deleteTask(project) {
+        RestClientService.callDelete('/projects/' + project.id).then(response => {
+
+            return response
+                .json()
+                .then(json => {
+                    hashHistory.push('/project');
+                });
+        }).catch(err => {
+            console.error('Delete failed');
+        });
+    }
+
+    /**
      * Returns phase name for given phase id
      * 
      * @param {any} id 

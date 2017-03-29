@@ -3,18 +3,26 @@ import {inject, observer} from 'mobx-react';
 import ProjectFormStore from '../../../stores/ProjectFormStore.jsx';
 import {Link} from 'react-router';
 import ProjectForm from '../../forms/ProjectForm.jsx';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 @inject('ProjectFormStore')
 @observer
 class ProjectEdit extends Component {
+    
+    constructor(props) {
+        super(props);
+        const {ProjectFormStore} = this.props;
+        // Reset the ProjectFormStore to default values.
+        ProjectFormStore.reset();
+        // Fetch project and populate ProjectForm with project data
+        ProjectFormStore.fetchById(this.props.params.id);
+    }
+
     render () {
+
         return (
             <div>
-                {/* Material UI - inject the theme into application context */}
-                <MuiThemeProvider>
-                    <ProjectForm />
-                </MuiThemeProvider>
+                <ProjectForm />
+                <Link to={'/project'}>Back</Link>
             </div>
         )
     }
