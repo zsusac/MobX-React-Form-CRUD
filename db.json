@@ -42,5 +42,63 @@
       "id": 4,
       "name": "Low"
     }
+  ],
+  "projects": [
+      {
+        "id": 1,
+        "name": "Project 1",
+        "description": "Project description 1",
+        "phase": "1",
+        "tasks": [
+            {
+            "id": 1,
+            "task": "Task 1",
+            "completed": true,
+            "priority": "1"
+            },
+            {
+            "id": 2,
+            "task": "Task 2",
+            "completed": false,
+            "priority": "2"
+            },
+            {
+            "id": 3,
+            "task": "Task 3",
+            "completed": true,
+            "priority": "3"
+            },
+            {
+            "id": 4,
+            "task": "Task 4",
+            "completed": false,
+            "priority": "4"
+            }
+        ]
+      }
+  ],
+  "phases": [
+      {
+        "id": 1,
+        "name": "Project Initiation"
+      },
+      {
+        "id": 2,
+        "name": "Project Planning"
+
+      },
+      {
+        "id": 3,
+        "name": "Project Execution"
+
+      },
+      {
+        "id": 4,
+        "name": "Project Performance/Monitoring"
+      },
+      {
+        "id": 5,
+        "name": "Project Closure"
+      }
   ]
 }
