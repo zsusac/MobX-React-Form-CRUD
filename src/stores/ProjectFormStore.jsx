@@ -14,7 +14,17 @@ const plugins = {
 /**
  * ProjectFormStore fields property
  */
-const fields = ['id', 'name', 'description', 'phase', 'tasks'];
+const fields = [
+    'id', 
+    'name', 
+    'description', 
+    'phase', 
+    'tasks[]',
+    'tasks[].id',
+    'tasks[].task',
+    'tasks[].completed',
+    'tasks[].priority',
+];
 
 /**
  * ProjectFormStore rules property
@@ -40,10 +50,14 @@ const values = {
  * ProjectFormStore labels property
  */
 const labels = {
-    name: 'Name',
-    description: 'Description',
-    phase: 'Phase',
-    tasks: 'Tasks'
+    'name': 'Name',
+    'description': 'Description',
+    'phase': 'Phase',
+    'tasks': 'Tasks',
+    'tasks[].id': 'Identifier',
+    'tasks[].task': 'Task',
+    'tasks[].completed': 'Completed',
+    'tasks[].priority': 'Priority',
 };
 
 /**
@@ -198,15 +212,15 @@ class ProjectFormStore extends MobxReactForm {
      */
     getPhaseName(id) {
         switch (id) {
-            case '1':
+            case 1:
                 return 'Project Initiation';
-            case '2':
+            case 2:
                 return 'Project Planning';
-            case '3':
+            case 3:
                 return 'Project Execution';
-            case '4':
+            case 4:
                 return 'Project Performance/Monitoring';
-            case '5':
+            case 5:
                 return 'Project Closure';
             default:
                 return 'Undefined';

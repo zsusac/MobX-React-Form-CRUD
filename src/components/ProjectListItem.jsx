@@ -23,7 +23,7 @@ ProjectListItem.propTypes = {
         id: React.PropTypes.number.isRequired,
         name: React.PropTypes.string.isRequired,
         description: React.PropTypes.string.isRequired,
-        phase: React.PropTypes.string.isRequired
+        phase: React.PropTypes.number.isRequired
     }).isRequired
 };
 

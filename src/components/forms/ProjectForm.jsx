@@ -7,6 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Paper from 'material-ui/Paper';
+import AppBar from 'material-ui/AppBar';
 
 @inject('ProjectFormStore')
 @observer
@@ -17,6 +19,21 @@ class ProjectForm extends Component {
         const {ProjectFormStore} = this.props;
         // Fetch project phases to populate dropdown.
         ProjectFormStore.fetchPhases();
+    }
+
+
+    /**
+     * Set project phase value
+     * 
+     * @param {any} event 
+     * @param {any} key 
+     * @param {any} value 
+     * 
+     * @memberOf ProjectForm
+     */
+    onChange(event, key, value) {
+        const {ProjectFormStore} = this.props;
+        ProjectFormStore.$('phase').set(value);
     }
 
     render() {
@@ -42,17 +59,13 @@ class ProjectForm extends Component {
                 <MuiThemeProvider>
                     <form onSubmit={ProjectFormStore.onSubmit}>
                         <TextField
-                            {...ProjectFormStore.$('name').bind()}
-                            value={ProjectFormStore
+                            {...ProjectFormStore.$('name').bind({ type: 'textbox', placeholder: 'Project name' })}
+                            errorText={ProjectFormStore
                             .$('name')
-                            .value}
-                            hintText="Project name"/><br/>
+                            .error}/><br/>
 
                         <TextField
                             {...ProjectFormStore.$('description').bind()}
-                            value={ProjectFormStore
-                            .$('description')
-                            .value}
                             hintText="Project description"
                             multiLine={true}
                             rows={4}/><br/>
@@ -60,9 +73,7 @@ class ProjectForm extends Component {
                         <SelectField
                             floatingLabelText="Project phase"
                             {...ProjectFormStore.$('phase').bind()}
-                            value={ProjectFormStore
-                            .$('phase')
-                            .value}>
+                            onChange={this.onChange.bind(this)}>
                             {ProjectFormStore
                                 .phases
                                 .map(phase => {
@@ -71,6 +82,21 @@ class ProjectForm extends Component {
                         </SelectField>
                         <br/>
 
+                        <div>
+                            {ProjectFormStore.$('tasks').map(field => {
+                                return(
+                                    
+                                    <div key={field.$('id').value}>
+                                        <h4>{field.$('task').value}</h4>
+
+                                        <TextField
+                                            {...field.$('task').bind({ type: 'textbox', placeholder: 'Task name' })}/>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                        <br />
                         <RaisedButton
                             type="submit"
                             primary={true}
