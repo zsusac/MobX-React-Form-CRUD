@@ -9,6 +9,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
+import Checkbox from 'material-ui/Checkbox';
 
 @inject('ProjectFormStore')
 @observer
@@ -19,22 +20,23 @@ class ProjectForm extends Component {
         const {ProjectFormStore} = this.props;
         // Fetch project phases to populate dropdown.
         ProjectFormStore.fetchPhases();
+        // Fetch priorities to populate dropdown.
+        ProjectFormStore.fetchPriorities();
     }
 
-
     /**
-     * Set project phase value
+     * Set project phase value - reimplemented onChange handler
+     * (https://github.com/foxhound87/mobx-react-form/issues/218)
      * 
-     * @param {any} event 
-     * @param {any} key 
-     * @param {any} value 
+     * @param {any} event
+     * @param {any} key
+     * @param {any} value
      * 
      * @memberOf ProjectForm
      */
-    onChange(event, key, value) {
-        const {ProjectFormStore} = this.props;
-        ProjectFormStore.$('phase').set(value);
-    }
+    customOnChange = field => (event, key, value) => {
+        field.set( value );
+    };
 
     render() {
         const {ProjectFormStore} = this.props;
@@ -60,20 +62,21 @@ class ProjectForm extends Component {
                     <form onSubmit={ProjectFormStore.onSubmit}>
                         <TextField
                             {...ProjectFormStore.$('name').bind({ type: 'textbox', placeholder: 'Project name' })}
+                            floatingLabelText='Project name'
                             errorText={ProjectFormStore
                             .$('name')
                             .error}/><br/>
 
                         <TextField
                             {...ProjectFormStore.$('description').bind()}
-                            hintText="Project description"
+                            floatingLabelText='Project description'
+                            hintText='Project description'
                             multiLine={true}
                             rows={4}/><br/>
 
                         <SelectField
-                            floatingLabelText="Project phase"
-                            {...ProjectFormStore.$('phase').bind()}
-                            onChange={this.onChange.bind(this)}>
+                            {...ProjectFormStore.$('phase').bind({onChange: this.customOnChange(ProjectFormStore.$('phase'))})}
+                            floatingLabelText='Project phase'>
                             {ProjectFormStore
                                 .phases
                                 .map(phase => {
@@ -83,20 +86,49 @@ class ProjectForm extends Component {
                         <br/>
 
                         <div>
-                            {ProjectFormStore.$('tasks').map(field => {
-                                return(
-                                    
-                                    <div key={field.$('id').value}>
-                                        <h4>{field.$('task').value}</h4>
+                            {ProjectFormStore
+                                .$('tasks')
+                                .map(field => {
 
-                                        <TextField
-                                            {...field.$('task').bind({ type: 'textbox', placeholder: 'Task name' })}/>
-                                    </div>
-                                )
-                            })}
+                                    return (
+
+                                        <div
+                                            key={field
+                                            .$('id')
+                                            .value}>
+                                            <h4>{field
+                                                    .$('task')
+                                                    .value}</h4>
+
+                                            <TextField
+                                                {...field.$('task').bind({ type: 'textbox', placeholder: 'Task name' })}
+                                                floatingLabelText='Task name'/>
+
+                                            <Checkbox
+                                                {...field.$('completed').bind({ type: 'checkbox', placeholder: 'Completed' })}
+                                                checked={field
+                                                .$('completed')
+                                                .value}
+                                                onClick={field
+                                                .$('completed')
+                                                .onChange}/>
+
+                                            <SelectField
+                                                {...field.$('priority').bind({ onChange: this.customOnChange(field.$('priority')) })}
+                                                floatingLabelText='Task priority'>
+                                                {ProjectFormStore
+                                                    .priorities
+                                                    .map(priority => {
+                                                        return <MenuItem key={priority.id} value={priority.id} primaryText={priority.name}/>
+                                                    })}
+                                            </SelectField>
+
+                                        </div>
+                                    )
+                                })}
                         </div>
 
-                        <br />
+                        <br/>
                         <RaisedButton
                             type="submit"
                             primary={true}

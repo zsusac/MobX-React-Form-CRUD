@@ -43,7 +43,14 @@ const values = {
     name: '',
     description: '',
     phase: null,
-    tasks: []
+    tasks: [
+        {
+        'id': 1,
+        'task': '',
+        'completed': false,
+        'priority': null,
+        }
+    ]
 };
 
 /**
@@ -84,6 +91,13 @@ class ProjectFormStore extends MobxReactForm {
      * @memberOf ProjectFormStore
      */
     @observable phases = [];
+
+    /**
+     * List of priorities retrieved from server
+     *
+     * @memberOf ProjectFormStore
+     */
+    @observable priorities = [];
 
     /**
      * Form has passed client side validation
@@ -177,6 +191,27 @@ class ProjectFormStore extends MobxReactForm {
                     });
             }).catch(err => {
                 console.error('Fetch phases failed');
+            });
+        }
+    }
+
+    /**
+     * Fetch priorities from server
+     *
+     * @memberOf ProjectFormStore
+     */
+    @action fetchPriorities() {
+        // To reduce number of REST api calls, fetch priorities only when list is empty
+        if (this.priorities.length == 0) {
+            RestClientService.callGet('/priorities').then(response => {
+
+                return response
+                    .json()
+                    .then(json => {
+                        this.priorities = json;
+                    });
+            }).catch(err => {
+                console.error('Fetch priorities failed');
             });
         }
     }
